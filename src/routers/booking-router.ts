@@ -1,6 +1,5 @@
 import { getBooking, postBooking, putBooking } from "@/controllers/booking-controller";
-import { authenticateToken, validateBody } from "@/middlewares";
-import { signInSchema } from "@/schemas";
+import { authenticateToken } from "@/middlewares";
 import { Router } from "express";
 
 const bookingRouter = Router();
