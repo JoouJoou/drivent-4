@@ -14,12 +14,10 @@ async function makingReserve(roomId: number, userId: number) {
   }
   const checkVacancies = await bookingRepository.checkRoomVacancies(roomId);
   if (checkVacancies < 1) {
-    console.log("bbb");
     throw requestError(403, "No vacancy");
   }
   const checkReservations = await bookingRepository.findBookingByUserId(userId);
   if (checkReservations) {
-    console.log("aaa");
     throw requestError(403, "Already has a reservation");
   }
   return await bookingRepository.insertOrUpdateBooking(roomId, userId);
@@ -33,14 +31,15 @@ async function updateReserve(bookingId: number, userId: number, roomId: number) 
   if (checkReservations.userId !== userId) {
     throw unauthorizedError();
   }
-  const checkVacancies = await bookingRepository.checkRoomVacancies(roomId);
-  if (checkVacancies < 1) {
-    throw requestError(403, "No vacancy");
-  }
   const room = await bookingRepository.findRoomById(roomId);
   if (!room) {
     throw notFoundError();
   }
+  const checkVacancies = await bookingRepository.checkRoomVacancies(roomId);
+  if (checkVacancies < 1) {
+    throw requestError(403, "No vacancy");
+  }
+
   return await bookingRepository.insertOrUpdateBooking(roomId, userId, bookingId);
 }
 

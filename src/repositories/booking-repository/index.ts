@@ -46,7 +46,6 @@ async function findValidTicketByEnrollmentId(enrollmentId: number) {
   return prisma.ticket.findFirst({
     where: {
       enrollmentId,
-      ticketTypeId: 1,
     },
     include: {
       TicketType: true, //inner join
